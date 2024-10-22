@@ -1,34 +1,37 @@
-// swift-tools-version:5.5
+// swift-tools-version:5.10
 
 import PackageDescription
 
 let package = Package(
-    name: "TonSwift",
+    name: "TONSwift",
     platforms: [
-        .iOS(.v13)
+        .iOS(.v14)
     ],
     products: [
-        .library(name: "TonSwift", targets: ["TonSwift"]),
+        .library(name: "TONSwift", targets: ["TONSwift"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/attaswift/BigInt", .exact("5.3.0")),
-        .package(url: "https://github.com/bitmark-inc/tweetnacl-swiftwrap", .upToNextMajor(from: "1.0.0")),
-        .package(url: "https://github.com/jedisct1/swift-sodium", .exact("0.9.1"))
+        .package(url: "https://github.com/attaswift/BigInt.git", from: "5.4.1"),
+        .package(url: "https://github.com/bitmark-inc/tweetnacl-swiftwrap.git", from: "1.1.0"),
+        .package(url: "https://github.com/jedisct1/swift-sodium", from: "0.9.1"),
+        .package(url: "https://github.com/nicklockwood/SwiftFormat.git", from: "0.54.6"),
     ],
     targets: [
         .target(
-            name: "TonSwift",
+            name: "TONSwift",
             dependencies: [
-                .product(name: "BigInt", package: "BigInt"),
+                "BigInt",
                 .product(name: "TweetNacl", package: "tweetnacl-swiftwrap"),
                 .product(name: "Sodium", package: "swift-sodium"),
-            ]),
+            ]
+        ),
         .testTarget(
-            name: "TonSwiftTests",
+            name: "TONSwiftTests",
             dependencies: [
-                .byName(name: "TonSwift"),
-                .product(name: "BigInt", package: "BigInt"),
+                .target(name: "TONSwift"),
+                "BigInt",
                 .product(name: "TweetNacl", package: "tweetnacl-swiftwrap"),
-            ]),
+            ]
+        ),
     ]
 )
